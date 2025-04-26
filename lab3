@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Automobile {
+protected:
+    int max_speed; 
+
+public:
+    string model;   
+    Automobile(string model_name, int speed) : model(model_name), max_speed(speed) {}
+    virtual void print_parameters() const {
+        cout << "Модель: " << model << endl;
+        cout << "Максимальная скорость: " << max_speed << " км/ч" << endl;
+    }
+};
+
+class Truck : public Automobile {
+private:
+    double load_capacity; 
+
+public:
+    Truck(string model_name, int speed, double capacity) 
+        : Automobile(model_name, speed), load_capacity(capacity) {}
+    void print_parameters() const override {
+        Automobile::print_parameters();  
+        cout << "Грузоподъемность: " << load_capacity << " тонн" << endl;
+    }
+};
+
+int main() {
+    cout << "Статический полиморфизм" << endl;
+    Automobile car("Toyota Camry", 220);
+    Truck truck("Audi q5", 120, 20.5);
+    car.print_parameters(); 
+    cout << endl;
+    truck.print_parameters(); 
+    cout << "\n Динамический полиморфизм" << endl;
+    Automobile* auto_ptr;
+    auto_ptr = &car;
+    auto_ptr->print_parameters();  
+    cout << endl;
+    auto_ptr = &truck;
+    auto_ptr->print_parameters(); 
+    return 0;
+}
